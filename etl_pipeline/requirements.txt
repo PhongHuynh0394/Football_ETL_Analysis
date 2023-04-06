@@ -1,0 +1,13 @@
+dagster==1.1.20
+dagit==1.1.20
+dagster-postgres==0.17.20
+dagster-aws==0.17.20
+pandas==1.5.3
+SQLAlchemy==1.4.46
+pymysql==1.0.2
+cryptography==39.0.0
+pyarrow==10.0.1
+boto3==1.26.57
+fsspec==2023.1.0
+s3fs==0.4.2
+minio==7.1.13

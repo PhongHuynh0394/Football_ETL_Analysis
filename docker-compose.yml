@@ -1,0 +1,131 @@
+# version: '3.9'
+services:
+  minio:
+    hostname: minio
+    image: minio/minio
+    container_name: minio
+    volumes: 
+      - ./MinIO/storage:/data
+      - ./MinIO/config:/root/.minio
+    ports:
+      - "9000:9000"
+      - "9090:9090"
+    env_file:
+      - ./env.template
+    command: server /data --console-address ":9090"
+    networks:
+      - de_network
+    
+  mc:
+    image: minio/mc
+    container_name: mc
+    hostname: mc
+    env_file:
+      - ./env.template
+    entrypoint: >
+          /bin/sh -c " until (/usr/bin/mc config host add minio http://minio:9000 minio minio123) do echo '...waiting...' && sleep 1;done; /usr/bin/mc mb minio/warehouse; /usr/bin/mc policy set public minio/warehouse; exit 0; "
+    depends_on:
+      - minio
+    networks:
+      - de_network
+
+
+  de_mysql:
+    image: mysql:8.0
+    container_name: de_mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./storage/mysql_data:/var/lib/mysql
+      - ./dataset:/tmp/dataset
+    env_file:
+      - ./env.template
+    networks:
+      - de_network
+
+  de_psql:
+    container_name: de_psql
+    image: postgres:15-alpine
+    env_file:
+      - ./env.template
+    ports:
+      - '5432:5432'
+    volumes: 
+      - ./storage/postgres_data:/var/lib/postgresql/data
+    networks:
+      - de_network
+    
+  notebook:
+    container_name: notebook
+    build: 
+      context: ./jupyter
+    image: jupyter/base-notebook:python-3.8
+    working_dir: /home/jovyan/
+    volumes:
+      - ./working:/home/jovyan/work
+    ports:
+      - "8889:8889"
+    networks:
+      - de_network
+
+  de_dagster:
+    build:
+      context: ./dagster/
+    container_name: de_dagster
+    image: de_dagster
+
+  de_dagster_dagit:
+    image: de_dagster:latest
+    entrypoint:
+      - dagit
+      - -h
+      - "0.0.0.0"
+      - -p
+      - "3001"
+      - -w
+      - workspace.yaml
+    container_name: de_dagster_dagit
+    expose:
+      - "3001"
+    ports:
+      - "3001:3001"
+    volumes: # Make docker client accessible so we can terminate containers from dagit
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./dagster_home:/opt/dagster/dagster_home
+    env_file:
+      - ./env.template
+    networks:
+      - de_network
+
+  de_dagster_daemon:
+    image: de_dagster:latest
+    entrypoint:
+      - dagster-daemon
+      - run
+    container_name: de_dagster_daemon
+    volumes: # Make docker client accessible so we can launch containers using host docker
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./dagster_home:/opt/dagster/dagster_home
+    env_file:
+      - ./env.template
+    networks:
+      - de_network
+    
+  # Pipelines
+  etl_pipeline:
+    build:
+      context: ./etl_pipeline
+      dockerfile: ./Dockerfile
+    container_name: etl_pipeline
+    image: etl_pipeline:latest
+    volumes:
+      - ./etl_pipeline:/opt/dagster/app
+    env_file:
+      - ./env.template
+    networks:
+      - de_network
+
+networks:
+  de_network:
+    driver: bridge
+    name: de_network
