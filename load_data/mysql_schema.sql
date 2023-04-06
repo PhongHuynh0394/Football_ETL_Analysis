@@ -1,7 +1,7 @@
 
 DROP TABLE IF EXISTS leagues; 
 CREATE TABLE leagues (
-  leagueID varchar(32) NOT NULL, 
+  leagueID int NOT NULL, 
   name varchar(32), 
   understatNotation varchar(32),
   PRIMARY KEY (leagueID)
@@ -9,7 +9,7 @@ CREATE TABLE leagues (
 
 DROP TABLE IF EXISTS players;
 CREATE TABLE players (
-  playerID varchar(32) NOT NULL,
+  playerID int NOT NULL,
   name varchar(32),
   PRIMARY KEY (playerID)
 );
@@ -17,19 +17,19 @@ CREATE TABLE players (
 
 DROP TABLE IF EXISTS teams; 
 CREATE TABLE teams (
-  teamID varchar(32) NOT NULL, 
+  teamID int NOT NULL, 
   name varchar(32),
   PRIMARY KEY (teamID)
 );
 
 DROP TABLE IF EXISTS games; 
 CREATE TABLE games (
-  gameID varchar(32) NOT NULL, 
-  leagueID varchar(32) NOT NULL,
+  gameID int NOT NULL, 
+  leagueID int NOT NULL,
   season varchar(32), 
   date timestamp, 
-  homeTeamID varchar(32) NOT NULL, 
-  awayTeamID varchar(32) NOT NULL, 
+  homeTeamID int NOT NULL, 
+  awayTeamID int NOT NULL, 
   homeGoals int4, 
   awayGoals int4, 
   homeProbability float4, 
@@ -64,8 +64,8 @@ PRIMARY KEY (gameID)
 
 DROP TABLE IF EXISTS appearances;
 CREATE TABLE appearances (
-  gameID varchar(32) NOT NULL, 
-  playerID varchar(32) NOT NULL, 
+  gameID int NOT NULL, 
+  playerID int NOT NULL, 
   goals int4, 
   ownGoals int4, 
   shots int4, 
@@ -82,15 +82,15 @@ CREATE TABLE appearances (
   time int4, 
   substituteIn int4, 
   substituteOut int4, 
-  leagueID varchar(32) NOT NULL,
+  leagueID int NOT NULL,
 PRIMARY KEY (gameID, playerID)
 );
 
 DROP TABLE IF EXISTS shots; 
 CREATE TABLE shots (
-  gameID varchar(32) NOT NULL, 
-  shooterID varchar(32) NOT NULL, 
-  assisterID varchar(32) NULL, 
+  gameID int NOT NULL, 
+  shooterID int NOT NULL, 
+  assisterID int NULL, 
   minute int4, 
   situation varchar(32), 
   lastAction varchar(32), 
@@ -104,8 +104,8 @@ PRIMARY KEY (gameID, shooterID)
 
 DROP TABLE IF EXISTS teamstats; 
 CREATE TABLE teamstats (
-  gameID varchar(32), 
-  teamID varchar(32), 
+  gameID int, 
+  teamID int, 
   season int4, 
   date varchar(32), 
   location varchar(32), 

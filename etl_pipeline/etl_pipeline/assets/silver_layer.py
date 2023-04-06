@@ -3,7 +3,6 @@ import pandas as pd
 
 @asset(
     io_manager_key="minio_io_manager",
-    #required_resource_keys={"minio_io_manager"},
     ins={
         "bronze_olist_products_dataset": AssetIn(
             key_prefix=["bronze", "ecom"],
