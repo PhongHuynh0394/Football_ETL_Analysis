@@ -17,7 +17,7 @@ def asset_factory (table: str):
         name=table,
         io_manager_key="minio_io_manager",
         required_resource_keys={"mysql_io_manager"},
-        key_prefix=["bronze", "ecom"],
+        key_prefix=["football", "bronze"],
         compute_kind="MySQL",
         group_name="bronze_layer"
     )

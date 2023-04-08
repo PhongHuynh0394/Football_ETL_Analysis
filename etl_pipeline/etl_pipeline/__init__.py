@@ -1,6 +1,6 @@
 import os
 from dagster import Definitions
-# from .assets.silver_layer import *
+from .assets.silver_layer import *
 # from .assets.gold_layer import *
 from .assets.bronze_layer import *
 # from .assets.warehouse_layer import *
@@ -28,9 +28,9 @@ PSQL_CONFIG = {
     "user": os.getenv("POSTGRES_USER"),
     "password": os.getenv("POSTGRES_PASSWORD")
 }
-
+ls_asset=[asset_factory(table) for table in tables] + [silver_statsPerLeagueSeason]
 defs = Definitions(
-    assets=[asset_factory(table) for table in tables],
+    assets=ls_asset,
     resources={
         "mysql_io_manager": MySQLIOManager(MYSQL_CONFIG),
         "minio_io_manager": MinIOIOManager(MINIO_CONFIG),
