@@ -6,7 +6,6 @@ tables = [
     "players",
     "games",
     "appearances",
-    "shots",
     "teamstats",
     "teams"
 ]
@@ -18,7 +17,7 @@ def asset_factory (table: str):
         io_manager_key="minio_io_manager",
         required_resource_keys={"mysql_io_manager"},
         key_prefix=["football", "bronze"],
-        compute_kind="MySQL",
+        compute_kind="SQL",
         group_name="bronze_layer"
     )
     def _asset(context) -> Output[pd.DataFrame]:

@@ -18,7 +18,7 @@ import pandas as pd
     key_prefix=["football", "silver"],
     description='Statistic of teams in games',
     group_name="Silver_layer",
-    compute_kind="Minio"
+    compute_kind="Pandas"
 )
 def silver_statsTeamOnGames(teamstats: pd.DataFrame, games: pd.DataFrame, leagues: pd.DataFrame) -> Output[pd.DataFrame]:
     ts = teamstats.copy()
@@ -59,7 +59,7 @@ def silver_statsTeamOnGames(teamstats: pd.DataFrame, games: pd.DataFrame, league
     key_prefix=["football", "silver"],
     group_name="Silver_layer",
     description='statistic of players in games',
-    compute_kind="Minio"
+    compute_kind="Pandas"
 )
 def silver_playerAppearances(appearances: pd.DataFrame, games: pd.DataFrame, players: pd.DataFrame) -> Output[pd.DataFrame]:
     app = appearances.copy()
@@ -83,4 +83,25 @@ def silver_playerAppearances(appearances: pd.DataFrame, games: pd.DataFrame, pla
             "records": len(player_appearances)
         }
     )
-    
+
+@asset(
+    io_manager_key="minio_io_manager",
+    required_resource_keys={"minio_io_manager"},
+    ins={
+        "teams": AssetIn(
+            key_prefix=["football", "bronze"]
+        )
+    },
+    key_prefix=["football", "silver"],
+    group_name="Silver_layer",
+    description='Teams',
+    compute_kind="Pandas"
+)
+def silver_teams(teams: pd.DataFrame) -> Output[pd.DataFrame]:
+    return Output(
+        teams,
+        metadata={
+            "table": 'teams',
+            'records': len(teams)
+        }
+    )

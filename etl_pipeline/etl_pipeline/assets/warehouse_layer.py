@@ -3,22 +3,72 @@ import pandas as pd
 
 @multi_asset(
     ins={
-        "gold_sales_values_by_category": AssetIn(
-            key_prefix=["gold", "ecom"]
+        "gold_statsPerLeagueSeason": AssetIn(
+            key_prefix=["football", "gold"]
             #input_manager_key="minio_io_manger"
         )
     },
     outs={
-        "sales_values_by_category": AssetOut(
+        "statsperleagueseason": AssetOut(
             io_manager_key="psql_io_manager",
-            key_prefix=["sales_values_by_category", 'gold'],
+            key_prefix=["statsPerLeagueSeason", 'football'],
             metadata={
                 "columns": [
-                    "monthly",
-                    "category",
-                    "total_sales",
-                    "total_bills",
-                    "values_per_bill"
+                    "name",
+                    "season",
+                    "goals",
+                    "xGoals",
+                    "shots",
+                    "shotsOnTarget",
+                    "fouls",
+                    "yellowCards",
+                    "redCards",
+                    "corners",
+                    "games",
+                    "goalPerGame"
+                ]
+            }
+        ),
+    },
+    compute_kind="PostgreSQL",
+    group_name="Warehouse_layer"
+)
+def statsPerLeagueSeason(gold_statsPerLeagueSeason: pd.DataFrame):# -> Output[pd.DataFrame]:
+    return Output(
+        gold_statsPerLeagueSeason,
+        metadata={
+            "schema": "football",
+            "table": "statsPerLeagueSeason",
+            "records": len(gold_statsPerLeagueSeason)
+        }
+    )
+
+
+@multi_asset(
+    ins={
+        "gold_statsPerPlayerSeason": AssetIn(
+            key_prefix=['football', 'gold']
+        )
+    },
+    outs={
+        "statsperplayerseason": AssetOut(
+            io_manager_key="psql_io_manager",
+            key_prefix=["statsPerPlayerSeason", 'football'],
+            metadata={
+                "columns": [
+                    "playerID",
+                    "name",
+                    "season",
+                    "goals",
+                    "shots",
+                    "xGoals",
+                    "xGoalsChain",
+                    "xGoalsBuildup",
+                    "assists",
+                    "keyPasses",
+                    "xAssists",
+                    "gDiff",
+                    "gDiffRatio"
                 ]
             }
         )
@@ -26,12 +76,16 @@ import pandas as pd
     compute_kind="PostgreSQL",
     group_name="Warehouse_layer"
 )
-def sales_values_by_category(gold_sales_values_by_category: pd.DataFrame) -> Output[pd.DataFrame]:
+def statsPerPlayerSeason(gold_statsPerPlayerSeason: pd.DataFrame):# -> Output[pd.DataFrame]:
     return Output(
-        gold_sales_values_by_category,
+        gold_statsPerPlayerSeason,
         metadata={
-            "schema": "gold",
-            "table": "sales_values_by_category",
-            "records": len(gold_sales_values_by_category)
+            "schema": "football",
+            "table": "statsPerPlayerSeason",
+            "records": len(gold_statsPerPlayerSeason)
         }
     )
+# , Output(
+#         gold_statsPerPLayerSeason,
+#         output_name='statsperplayerseason'
+#     )

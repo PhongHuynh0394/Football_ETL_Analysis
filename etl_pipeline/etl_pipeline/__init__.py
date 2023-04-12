@@ -3,7 +3,7 @@ from dagster import Definitions
 from .assets.silver_layer import *
 from .assets.gold_layer import *
 from .assets.bronze_layer import *
-# from .assets.warehouse_layer import *
+from .assets.warehouse_layer import *
 from .resources.minio_io_manager import MinIOIOManager
 from .resources.mysql_io_manager import MySQLIOManager
 from .resources.psql_io_manager import PostgreSQLIOManager
@@ -28,7 +28,7 @@ PSQL_CONFIG = {
     "user": os.getenv("POSTGRES_USER"),
     "password": os.getenv("POSTGRES_PASSWORD")
 }
-ls_asset=[asset_factory(table) for table in tables] + [silver_statsTeamOnGames, silver_playerAppearances, gold_statPerLeagueSeason]
+ls_asset=[asset_factory(table) for table in tables] + [silver_statsTeamOnGames, silver_teams ,silver_playerAppearances, gold_statsPerLeagueSeason, gold_statsPerPlayerSeason, statsPerLeagueSeason,statsPerPlayerSeason]
 defs = Definitions(
     assets=ls_asset,
     resources={
