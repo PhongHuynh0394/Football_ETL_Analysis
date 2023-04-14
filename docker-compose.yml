@@ -53,19 +53,6 @@ services:
     networks:
       - de_network
     
-  notebook:
-    container_name: notebook
-    build: 
-      context: ./jupyter
-    image: jupyter/base-notebook:python-3.8
-    working_dir: /home/jovyan/
-    volumes:
-      - ./working:/home/jovyan/work
-    ports:
-      - "8889:8889"
-    networks:
-      - de_network
-  
   streamlit:
     build: ./streamlit
     container_name: streamlit
