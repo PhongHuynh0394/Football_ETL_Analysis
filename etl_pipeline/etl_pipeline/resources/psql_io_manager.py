@@ -34,7 +34,3 @@ class PostgreSQLIOManager(IOManager):
                 chunksize=10000,
                 method="multi"
             )
-    def extract_data(self, sql: str) -> pd.DataFrame:
-        with connect_psql(self._config) as conn:
-            pd_data = pd.read_sql_query(sql, conn)
-            return pd_data

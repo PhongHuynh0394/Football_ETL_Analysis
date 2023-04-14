@@ -62,6 +62,8 @@ services:
       - "8501:8501"
     volumes:
       - "./streamlit/src:/usr/src/app/src"
+    networks:
+      - de_network
 
   de_dagster:
     build:

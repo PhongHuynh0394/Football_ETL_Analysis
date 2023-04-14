@@ -5,3 +5,4 @@ numpy
 streamlit
 psycopg2-binary
 sqlalchemy
+python-dotenv
