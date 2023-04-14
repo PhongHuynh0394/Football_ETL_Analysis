@@ -7,7 +7,7 @@ import pandas as pd
 load_dotenv()
 
 #list table in database
-table = ['statsperleagueseason','statsperplayerseason']
+table = ['statsperleagueseason','statsperplayerseason', 'statsplayerper90']
 
 PSQL_CONFIG = {
     "host": os.getenv("POSTGRES_HOST"),

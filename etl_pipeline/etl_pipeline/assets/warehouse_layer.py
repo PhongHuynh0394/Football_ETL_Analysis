@@ -85,3 +85,41 @@ def statsPerPlayerSeason(gold_statsPerPlayerSeason: pd.DataFrame) -> Output[pd.D
         }
     )
 
+
+@multi_asset(
+    ins={
+        "gold_statsPlayerPer90": AssetIn(
+            key_prefix=['football', 'gold']
+        )
+    },
+    outs={
+        "statsplayerper90": AssetOut(
+            io_manager_key="psql_io_manager",
+            key_prefix=["statsPlayerPer90", 'analysis'],
+            metadata={
+                "columns": [
+                    'playerID',
+                    'name',
+                    'total_goals',
+                    'total_assists',
+                    'total_time',
+                    'goalsPer90',
+                    'assistsPer90',
+                    'scorers'
+                ]
+            }
+        )
+    },
+    compute_kind="PostgreSQL",
+    group_name="Warehouse_layer"
+)
+def statsPlayerPer90(gold_statsPlayerPer90: pd.DataFrame) -> Output[pd.DataFrame]:
+    return Output(
+        gold_statsPlayerPer90,
+        metadata={
+            "schema": "analysis",
+            "table": "statsPlayerPer90",
+            "records": len(gold_statsPlayerPer90)
+        }
+    )
+

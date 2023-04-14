@@ -33,8 +33,11 @@ ls_asset=[asset_factory(table) for table in tables] + [silver_statsTeamOnGames,
                                                        silver_playerAppearances,
                                                        gold_statsPerLeagueSeason,
                                                        gold_statsPerPlayerSeason, 
+                                                       gold_statsPlayerPer90,
                                                        statsPerLeagueSeason,
-                                                       statsPerPlayerSeason]
+                                                       statsPerPlayerSeason,
+                                                       statsPlayerPer90]
+
 defs = Definitions(
     assets=ls_asset,
     resources={

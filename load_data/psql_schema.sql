@@ -34,3 +34,16 @@ CREATE TABLE analysis.statsPerPlayerSeason(
     gDiffRatio float,
     PRIMARY KEY (playerID, season)
 );
+
+DROP TABLE IF EXISTS analysis.statsPlayerPer90 CASCADE;
+CREATE TABLE analysis.statsPlayerPer90(
+    playerID int,
+    name varchar(32),
+    total_goals int,
+    total_assists int,
+    total_time int,
+    goalsPer90 float,
+    assistsPer90 float,
+    scorers int,
+    PRIMARY KEY (playerID, name)
+);
