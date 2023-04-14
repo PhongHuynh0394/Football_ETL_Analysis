@@ -1,8 +1,8 @@
-CREATE SCHEMA IF NOT EXISTS football;
+CREATE SCHEMA IF NOT EXISTS analysis;
 
 
-DROP TABLE IF EXISTS football.statsPerLeagueSeason CASCADE;
-CREATE TABLE football.statsPerLeagueSeason(
+DROP TABLE IF EXISTS analysis.statsPerLeagueSeason CASCADE;
+CREATE TABLE analysis.statsPerLeagueSeason(
     name varchar(32),
     season int,
     goals int,
@@ -17,8 +17,8 @@ CREATE TABLE football.statsPerLeagueSeason(
     goalPerGame float,
     PRIMARY KEY (name, season)
 );
-DROP TABLE IF EXISTS football.statsPerPlayerSeason CASCADE;
-CREATE TABLE football.statsPerPlayerSeason(
+DROP TABLE IF EXISTS analysis.statsPerPlayerSeason CASCADE;
+CREATE TABLE analysis.statsPerPlayerSeason(
     playerID int,
     name varchar(32),
     season varchar(32),

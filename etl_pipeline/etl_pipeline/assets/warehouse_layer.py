@@ -5,13 +5,12 @@ import pandas as pd
     ins={
         "gold_statsPerLeagueSeason": AssetIn(
             key_prefix=["football", "gold"]
-            #input_manager_key="minio_io_manger"
         )
     },
     outs={
         "statsperleagueseason": AssetOut(
             io_manager_key="psql_io_manager",
-            key_prefix=["statsPerLeagueSeason", 'football'],
+            key_prefix=["statsPerLeagueSeason", 'analysis'],
             metadata={
                 "columns": [
                     "name",
@@ -33,11 +32,11 @@ import pandas as pd
     compute_kind="PostgreSQL",
     group_name="Warehouse_layer"
 )
-def statsPerLeagueSeason(gold_statsPerLeagueSeason: pd.DataFrame):# -> Output[pd.DataFrame]:
+def statsPerLeagueSeason(gold_statsPerLeagueSeason: pd.DataFrame) -> Output[pd.DataFrame]:
     return Output(
         gold_statsPerLeagueSeason,
         metadata={
-            "schema": "football",
+            "schema": "analysis",
             "table": "statsPerLeagueSeason",
             "records": len(gold_statsPerLeagueSeason)
         }
@@ -53,7 +52,7 @@ def statsPerLeagueSeason(gold_statsPerLeagueSeason: pd.DataFrame):# -> Output[pd
     outs={
         "statsperplayerseason": AssetOut(
             io_manager_key="psql_io_manager",
-            key_prefix=["statsPerPlayerSeason", 'football'],
+            key_prefix=["statsPerPlayerSeason", 'analysis'],
             metadata={
                 "columns": [
                     "playerID",
@@ -76,16 +75,13 @@ def statsPerLeagueSeason(gold_statsPerLeagueSeason: pd.DataFrame):# -> Output[pd
     compute_kind="PostgreSQL",
     group_name="Warehouse_layer"
 )
-def statsPerPlayerSeason(gold_statsPerPlayerSeason: pd.DataFrame):# -> Output[pd.DataFrame]:
+def statsPerPlayerSeason(gold_statsPerPlayerSeason: pd.DataFrame) -> Output[pd.DataFrame]:
     return Output(
         gold_statsPerPlayerSeason,
         metadata={
-            "schema": "football",
+            "schema": "analysis",
             "table": "statsPerPlayerSeason",
             "records": len(gold_statsPerPlayerSeason)
         }
     )
-# , Output(
-#         gold_statsPerPLayerSeason,
-#         output_name='statsperplayerseason'
-#     )
+

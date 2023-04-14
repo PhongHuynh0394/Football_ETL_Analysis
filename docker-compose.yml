@@ -15,7 +15,6 @@ services:
     command: server /data --console-address ":9090"
     networks:
       - de_network
-    
   mc:
     image: minio/mc
     container_name: mc
@@ -28,7 +27,6 @@ services:
       - minio
     networks:
       - de_network
-
 
   de_mysql:
     image: mysql:8.0
@@ -67,6 +65,16 @@ services:
       - "8889:8889"
     networks:
       - de_network
+  
+  streamlit:
+    build: ./streamlit
+    container_name: streamlit
+    image: streamlit:latest
+    command: "streamlit run src/main.py"
+    ports:
+      - "8501:8501"
+    volumes:
+      - "./streamlit/src:/usr/src/app/src"
 
   de_dagster:
     build:
@@ -124,7 +132,7 @@ services:
       - ./env.template
     networks:
       - de_network
-
+  
 networks:
   de_network:
     driver: bridge

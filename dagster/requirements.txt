@@ -1,3 +1,4 @@
 dagster==1.1.20
 dagit==1.1.20
 dagster-postgres==0.17.20
+dagster-dbt==0.17.20

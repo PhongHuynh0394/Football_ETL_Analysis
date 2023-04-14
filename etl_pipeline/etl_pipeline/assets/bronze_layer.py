@@ -1,6 +1,5 @@
 from dagster import asset, Output, AssetIn, AssetOut
 import pandas as pd
-
 tables = [
     "leagues",
     "players",

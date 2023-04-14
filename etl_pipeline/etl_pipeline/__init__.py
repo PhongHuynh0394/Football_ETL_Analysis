@@ -28,12 +28,18 @@ PSQL_CONFIG = {
     "user": os.getenv("POSTGRES_USER"),
     "password": os.getenv("POSTGRES_PASSWORD")
 }
-ls_asset=[asset_factory(table) for table in tables] + [silver_statsTeamOnGames, silver_teams ,silver_playerAppearances, gold_statsPerLeagueSeason, gold_statsPerPlayerSeason, statsPerLeagueSeason,statsPerPlayerSeason]
+ls_asset=[asset_factory(table) for table in tables] + [silver_statsTeamOnGames, 
+                                                       silver_teams ,
+                                                       silver_playerAppearances,
+                                                       gold_statsPerLeagueSeason,
+                                                       gold_statsPerPlayerSeason, 
+                                                       statsPerLeagueSeason,
+                                                       statsPerPlayerSeason]
 defs = Definitions(
     assets=ls_asset,
     resources={
         "mysql_io_manager": MySQLIOManager(MYSQL_CONFIG),
         "minio_io_manager": MinIOIOManager(MINIO_CONFIG),
-        "psql_io_manager": PostgreSQLIOManager(PSQL_CONFIG)
+        "psql_io_manager": PostgreSQLIOManager(PSQL_CONFIG),
     }
 )

@@ -1,6 +1,5 @@
 from dagster import asset, Output, AssetIn
 import pandas as pd
-
 @asset(
     io_manager_key="minio_io_manager",
     ins={
