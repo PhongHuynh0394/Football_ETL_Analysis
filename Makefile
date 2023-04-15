@@ -1,13 +1,13 @@
-include env.template
+include .env
 
 build:
 	docker compose build
 
 up:
-	docker compose --env-file env.template up -d
+	docker compose --env-file .env up -d
 
 down:
-	docker compose --env-file env.template down
+	docker compose --env-file .env down
 
 restart:
 	make down && make up
@@ -29,3 +29,6 @@ mysql_load:
 
 mysql_create:
 	docker exec -it de_mysql mysql --local_infile -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" ${MYSQL_DATABASE} -e"source /tmp/dataset/load_data/mysql_schema.sql"
+
+mysql_create_relation:
+	docker exec -it de_mysql mysql --local_infile -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" ${MYSQL_DATABASE} -e"source /tmp/dataset/load_data/mysql_foreign.sql"

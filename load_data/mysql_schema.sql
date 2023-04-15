@@ -86,22 +86,6 @@ CREATE TABLE appearances (
 PRIMARY KEY (gameID, playerID)
 );
 
-DROP TABLE IF EXISTS shots; 
-CREATE TABLE shots (
-  gameID int NOT NULL, 
-  shooterID int NOT NULL, 
-  assisterID int NULL, 
-  minute int4, 
-  situation varchar(32), 
-  lastAction varchar(32), 
-  shotType varchar(32), 
-  shotResult varchar(32), 
-  xGoal float4, 
-  positionX float4, 
-  positionY float4,
-PRIMARY KEY (gameID, shooterID)
-);
-
 DROP TABLE IF EXISTS teamstats; 
 CREATE TABLE teamstats (
   gameID int, 

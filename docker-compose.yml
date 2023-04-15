@@ -11,7 +11,7 @@ services:
       - "9000:9000"
       - "9090:9090"
     env_file:
-      - ./env.template
+      - ./.env
     command: server /data --console-address ":9090"
     networks:
       - de_network
@@ -20,7 +20,7 @@ services:
     container_name: mc
     hostname: mc
     env_file:
-      - ./env.template
+      - ./.env
     entrypoint: >
           /bin/sh -c " until (/usr/bin/mc config host add minio http://minio:9000 minio minio123) do echo '...waiting...' && sleep 1;done; /usr/bin/mc mb minio/warehouse; /usr/bin/mc policy set public minio/warehouse; exit 0; "
     depends_on:
@@ -37,7 +37,7 @@ services:
       - ./storage/mysql_data:/var/lib/mysql
       - ./dataset:/tmp/dataset
     env_file:
-      - ./env.template
+      - ./.env
     networks:
       - de_network
 
@@ -45,7 +45,7 @@ services:
     container_name: de_psql
     image: postgres:15-alpine
     env_file:
-      - ./env.template
+      - ./.env
     ports:
       - '5432:5432'
     volumes: 
@@ -90,7 +90,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./dagster_home:/opt/dagster/dagster_home
     env_file:
-      - ./env.template
+      - ./.env
     networks:
       - de_network
 
@@ -104,7 +104,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./dagster_home:/opt/dagster/dagster_home
     env_file:
-      - ./env.template
+      - ./.env
     networks:
       - de_network
     
@@ -118,7 +118,7 @@ services:
     volumes:
       - ./etl_pipeline:/opt/dagster/app
     env_file:
-      - ./env.template
+      - ./.env
     networks:
       - de_network
   

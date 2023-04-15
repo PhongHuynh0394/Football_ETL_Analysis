@@ -113,7 +113,7 @@ def statplayer():
         st.plotly_chart(fig)
 
 # Page status
-st.sidebar.markdown("# Main page")
+st.sidebar.markdown("# Main page :pushpin:")
 introduction = '''
 Đây là trang thông tin tổng quan về phân tích dữ \
 liệu của **dataset Football**.
@@ -123,7 +123,7 @@ Dữ liệu được load từ database __PostgreSQL__ (localhost:5432) để l�
 '''
 st.sidebar.write(introduction)
 
-st.markdown('# Football Analysis')
+st.markdown('# Football Analysis :soccer:')
 '''
 Tổng hợp phân tích data được transform từ 5 giải vô dịch quốc gia hàng đầu châu Âu từ mùa 2014 - 2020 \
 từ bộ dataset **Football**
@@ -132,18 +132,18 @@ with st.container():
 
     st.markdown("<hr/>", unsafe_allow_html=True)
     ## Data overview
-    st.markdown("## Data Overview")
+    st.markdown("## Data Overview :bar_chart:")
 
     first_col, second_col = st.columns(2)
 
     with first_col:
-        st.markdown("**Tables**")
+        st.markdown("### **Tables**")
         num=len(ls_df)
         st.markdown(f"<h2 style='text-align: left; color: red;'>{num}</h2>", unsafe_allow_html=True)
 
     with second_col:
-        st.markdown("**DataBase**")
-        st.markdown(f"**PostgreSQL**")
+        st.markdown("### **DataBase**")
+        st.markdown(f"##### **PostgreSQL**")
 
     if st.checkbox('Click to overview detail tables'):
         option = st.selectbox(
@@ -172,7 +172,7 @@ with st.container():
 with st.container():
     st.markdown("<hr/>", unsafe_allow_html=True)
 
-    st.markdown("## Football Statistic")
+    st.markdown("## Football Statistic :bar_chart:")
     option = st.selectbox(
         '**Choose statistic**',
         ['Leagues', 'Players']
