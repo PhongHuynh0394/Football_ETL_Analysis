@@ -4,7 +4,7 @@
 
 /.ipynb_checkpoints/
 
-.env
+/.env
 /streamlit/src/.env
 /streamlit/src/__pycache__
 #Dagster
