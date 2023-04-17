@@ -4,6 +4,9 @@
 
 /.ipynb_checkpoints/
 
+.env
+/streamlit/src/.env
+/streamlit/src/__pycache__
 #Dagster
 /dagster_home/.logs_queue/
 /dagster_home/.nux/
