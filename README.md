@@ -1,4 +1,5 @@
 # Football_ETL_Analysis
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## Introduction
 Project nhằm xây dựng End-to-End data pipeline theo mô hình ETL (Extract - Transform - Load) kết hợp thực hiện việc phân tích và trực quan hóa dữ liệu trên Dashboard
